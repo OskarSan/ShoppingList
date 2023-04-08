@@ -19,7 +19,16 @@ public class ProductStorage {
         productList.add(product);
     }
 
-
+    public void removeProduct(String id){
+        int i = 0;
+        for(Product r : productList ){
+            if(r.getId().equals(id)){
+                break;
+            }
+            i++;
+        }
+        productList.remove(i);
+    }
     public ArrayList<Product> getProducts() {
         return productList;
     }

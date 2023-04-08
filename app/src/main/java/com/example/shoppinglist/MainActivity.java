@@ -1,8 +1,11 @@
 package com.example.shoppinglist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +14,8 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
 
     private TextView productName, productInfo;
-
+    private ProductStorage productStorage;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -20,19 +24,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = MainActivity.this;
+        productStorage = ProductStorage.getInstance();
+
+        recyclerView = findViewById(R.id.productRV);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new ProductListAdapter(getApplicationContext(), productStorage.getProducts()));
     }
 
     public void addProduct(View view){
-        ProductStorage productStorage = ProductStorage.getInstance();
-        productName = findViewById(R.id.productTextView);
-        productInfo = findViewById(R.id.productInfoTextView);
 
-        Product thisProduct = new Product(String.valueOf(productName.getText()), String.valueOf(productInfo.getText()));
-
-        productStorage.addProduct(thisProduct);
-        
-
+        Intent intent = new Intent(this, ProductEditActivity.class);
+        startActivity(intent);
 
     }
+
 
 }
